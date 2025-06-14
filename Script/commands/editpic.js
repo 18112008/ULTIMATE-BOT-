@@ -1,5 +1,5 @@
 const axios = require('axios');
-const dipto = "https://www.noobs-api.rf.gd/dipto";
+const dipto = "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";
 
 module.exports.config = {
  name: "refine",
