@@ -1,18 +1,22 @@
 const axios = require('axios');
-const EDIT_API_URL = "https://api.example.com/v1/edit";
+
+// তোমার AI Image Editing API URL (এখানে demo URL দেওয়া হয়েছে)
+const EDIT_API_URL = "https://api.example.com/v1/edit"; // <-- প্রকৃত API endpoint বসাও
+
+// তোমার API Key (গোপন রাখো)
 const API_KEY = "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";
 
 module.exports.config = {
   name: "refine",
-  version: "7.0",
-  credits: "dipto & ChatGPT",
+  version: "1.0",
+  credits: "dipto + ChatGPT",
   countDown: 5,
   hasPermssion: 1,
   category: "AI",
   commandCategory: "AI",
-  description: "Edit images using AI",
+  description: "Edit an image using AI",
   guide: {
-    en: "Reply to an image with {pn} [your prompt here]"
+    en: "Reply to an image with: refine [your prompt]"
   }
 };
 
@@ -43,7 +47,6 @@ async function handleEdit(api, event, args) {
 
     const contentType = response.headers['content-type'];
 
-    // যদি রেসপন্সে ইমেজ আসে
     if (contentType?.startsWith("image/")) {
       return api.sendMessage(
         { attachment: response.data },
@@ -52,7 +55,7 @@ async function handleEdit(api, event, args) {
       );
     }
 
-    // না হলে JSON রিড করে দেখাও
+    // fallback: JSON message
     let responseData = "";
     for await (const chunk of response.data) {
       responseData += chunk.toString();
@@ -82,6 +85,3 @@ module.exports.run = async ({ api, event, args }) => {
 module.exports.handleReply = async function ({ api, event, args }) {
   await handleEdit(api, event, args);
 };
-
-
----
